@@ -11,3 +11,7 @@ The server is inside the file server.js.  The client is inside index.html
 ## Running
 
 To run this example, first install the packages by running "yarn install".  Then, you can serve it by running "yarn start" and then visit http://127.0.0.1:3000/ to try the example.
+
+## Demo video
+
+A demo video is located here: https://youtu.be/EaQXXLmylog
