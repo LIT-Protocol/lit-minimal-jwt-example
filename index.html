@@ -41,7 +41,8 @@
           }
         }
       ]
-      const randomUrlPath = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      // generate a random path because you can only provision access to a given path once
+      const randomUrlPath = "/" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       window.resourceId = {
         baseUrl: 'https://my-dynamic-content-server.com',
         path: randomUrlPath, // this would normally be your url path, like "/webpage.html" for example
