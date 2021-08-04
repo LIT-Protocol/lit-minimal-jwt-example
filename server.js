@@ -7,11 +7,18 @@ const hostname = '127.0.0.1'
 const port = 3000
 
 const server = http.createServer((req, res) => {
-  // we only have 1 endpoint, and this is it.
   const parsedUrl = url.parse(req.url, true)
-  if (parsedUrl.path === '/verify') {
+
+  // we only have 1 endpoint, and this is it.
+  if (parsedUrl.pathname === '/verify') {
     const { jwt } = parsedUrl.query
+
     const { verified, header, payload } = LitJsSdk.verifyJwt({ jwt })
+
+    // The "verified" variable is a boolean that indicates whether or not the signature verified properly.  
+    // Note: YOU MUST CHECK THE PAYLOAD AGAINST THE CONTENT YOU ARE PROTECTING.  
+    // This means you need to look at "payload.baseUrl" which should match the hostname of the server, and you must also look at "payload.path" which should match the path being accessed.  
+    // If these do not match what you're expecting, you should reject the request!!
 
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json')

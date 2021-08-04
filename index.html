@@ -22,6 +22,7 @@
 
       document.getElementById('mintingStatus').innerText = "Minted!  Tx hash is " + txHash
     }
+
     async function provisionAccess() {
       document.getElementById('provisioningStatus').innerText = "Provisioning, please wait..."
       window.accessControlConditions = [
@@ -40,9 +41,10 @@
           }
         }
       ]
+      const randomUrlPath = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       window.resourceId = {
         baseUrl: 'https://my-dynamic-content-server.com',
-        path: '/a_path.html',
+        path: randomUrlPath, // this would normally be your url path, like "/webpage.html" for example
         orgId: ""
       }
       await litNodeClient.saveSigningCondition({
@@ -53,6 +55,7 @@
       })
       document.getElementById('provisioningStatus').innerText = "Provisioned!"
     }
+
     async function requestJwt() {
       document.getElementById('requestingStatus').innerText = "Requesting JWT, please wait..."
 
@@ -66,10 +69,12 @@
       document.getElementById('requestingStatus').innerText = "JWT Obtained!  It is  " + window.jwt
 
     }
+
     async function verifyJwt() {
       document.getElementById('verificationStatus').innerText = "Verifying, please wait..."
-      const data = await fetch('/?jwt=' + window.jwt).then(resp => resp.json())
-      document.getElementById('verificationStatus').innerText = "Verified!  Response is " + JSON.stringify(data, null, 2)
+      const data = await fetch('/verify?jwt=' + window.jwt).then(resp => resp.json())
+      document.getElementById('verificationStatus').innerText = "Verified!  Response is \n" + JSON.stringify(data, null, 2)
+      document.getElementById('verificationNote').style = 'display: block;'
     }
   </script>
 </head>
@@ -110,7 +115,14 @@
   <button onclick="verifyJwt()">Verify the JWT</button>
   <br />
   <br />
-  <div id='verificationStatus'></div>
+  <pre id='verificationStatus'></pre>
+  <br />
+  <p id='verificationNote' style='display: none;'>
+    The "verified" variable is a boolean that indicates whether or not the signature verified properly. Note: YOU MUST
+    CHECK THE PAYLOAD AGAINST THE CONTENT YOU ARE PROTECTING. This means you need to look at "payload.baseUrl" which
+    should match the hostname of the server, and you must also look at "payload.path" which should match the path being
+    accessed. If these do not match what you're expecting, you should reject the request.
+  </p>
 
 </body>
 
