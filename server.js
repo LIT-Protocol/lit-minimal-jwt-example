@@ -17,11 +17,11 @@ const server = http.createServer((req, res) => {
 
     // The "verified" variable is a boolean that indicates whether or not the signature verified properly.  
     // Note: YOU MUST CHECK THE PAYLOAD AGAINST THE CONTENT YOU ARE PROTECTING.  
-    // This means you need to look at "payload.baseUrl" which should match the hostname of the server, and you must also look at "payload.path" which should match the path being accessed, and you must also look at payload.orgId which will probably be empty 
+    // This means you need to look at "payload.baseUrl" which should match the hostname of the server, and you must also look at "payload.path" which should match the path being accessed, and you must also look at payload.orgId, payload.role, and payload.extraData which will probably be empty 
     // If these do not match what you're expecting, you should reject the request!!
 
     // note: you should check payload.path here, too, but we do not because for this demo we are generating a random path every time.
-    if (payload.baseUrl !== "my-dynamic-content-server.com" || payload.orgId !== "") {
+    if (payload.baseUrl !== "my-dynamic-content-server.com" || payload.orgId !== "" || payload.role !== "" || payload.extraData !== "") {
       // Reject this request!
       res.statusCode = 401
       res.end()

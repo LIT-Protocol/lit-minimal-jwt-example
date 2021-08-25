@@ -46,7 +46,9 @@
       window.resourceId = {
         baseUrl: 'my-dynamic-content-server.com',
         path: randomUrlPath, // this would normally be your url path, like "/webpage.html" for example
-        orgId: ""
+        orgId: "",
+        role: "",
+        extraData: ""
       }
       await litNodeClient.saveSigningCondition({
         accessControlConditions: window.accessControlConditions,
@@ -122,7 +124,8 @@
     The "verified" variable is a boolean that indicates whether or not the signature verified properly. Note: YOU MUST
     CHECK THE PAYLOAD AGAINST THE CONTENT YOU ARE PROTECTING. This means you need to look at "payload.baseUrl" which
     should match the hostname of the server, and you must also look at "payload.path" which should match the path being
-    accessed. If these do not match what you're expecting, you should reject the request.
+    accessed. You should also check that payload.orgId, payload.role, and payload.extraData are empty. If these do not
+    match what you're expecting, you should reject the request.
   </p>
 
 </body>
