@@ -1,5 +1,7 @@
 # LIT Protocol Minimal JWT Example
 
+*This example is powered by the lit-js-sdk located here: https://github.com/LIT-Protocol/lit-js-sdk*
+
 This repo is a minimal example to: 
 1. Mint an NFT (client side)
 2. Provision access to a resource (a web url) behind ownership of that NFT (client side)
